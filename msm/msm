@@ -1,0 +1,25 @@
+#
+# Minecraft Server Manager Cron
+#
+# Backs up worlds, rolls logs, moves worlds in RAM to disk,
+# and starts crashed servers
+#
+# For more information visit the project home page:
+# https://github.com/msmhq/msm
+#
+
+
+# Backs up all worlds for all servers at 2 minutes past 5 in the morning
+02    05  *   *   *   minecraft   /etc/init.d/msm all worlds backup
+
+# Syncs backups to S3 20 minutes past 5 in the morning
+20    05  *   *   *   minecraft   aws s3 sync /opt/msm/archives/worlds/thecraftmine/thecraftmine s3://scottbouloutian-dev/msm-docker
+
+# Rolls the logs for all servers at 55 minutes past 4 in the morning
+55    04  *   *   *   minecraft   /etc/init.d/msm all logroll
+
+# Moves all "in RAM" worlds to disk every half hour for all servers
+*/30  *   *   *   *   minecraft   /etc/init.d/msm all worlds todisk
+
+# Start any crashed servers again each hour
+@hourly               minecraft   /etc/init.d/msm start
