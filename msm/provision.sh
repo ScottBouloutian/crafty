@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
+export PATH=$PATH:/usr/local/bin
+
 # Create a new server
-cp /tmp/thecraftmine-master/msm/msm.conf /etc
 msm update --noinput
 msm server create thecraftmine
 msm jargroup create minecraft minecraft
