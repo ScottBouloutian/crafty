@@ -21,6 +21,6 @@ resource "aws_instance" "minecraft" {
   }
 
   provisioner "remote-exec" {
-    script = "provision.sh"
+    script = "install.sh"
   }
 }
