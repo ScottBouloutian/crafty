@@ -29,5 +29,8 @@ install_msm
 # Provision msm
 wget https://github.com/ScottBouloutian/thecraftmine/archive/master.zip -O /tmp/master.zip
 unzip /tmp/master.zip -d /tmp
-cp /tmp/thecraftmine-master/msm/msm.conf /etc
+sudo cp /tmp/thecraftmine-master/msm/msm.conf /etc
+sudo cp /tmp/thecraftmine-master/msm/msm /etc/cron.d
+chmod +x /tmp/thecraftmine-master/msm/provision.sh
 sudo su -c /tmp/thecraftmine-master/msm/provision.sh minecraft
+sudo service crond restart

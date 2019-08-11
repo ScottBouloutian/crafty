@@ -10,6 +10,7 @@ msm thecraftmine jar minecraft
 cp /tmp/thecraftmine-master/msm/server.properties /opt/msm/servers/thecraftmine
 cp /tmp/thecraftmine-master/msm/eula.txt /opt/msm/servers/thecraftmine
 cp /tmp/thecraftmine-master/msm/white-list.txt /opt/msm/servers/thecraftmine
+mkdir /dev/shm/msm
 
 # Install forge
 if [ ! -d "/opt/msm/jars/forge" ]; then
@@ -27,11 +28,5 @@ wget https://dev.bukkit.org/projects/essentials/files/latest -O /opt/msm/servers
 wget https://scottbouloutian-dev.s3.amazonaws.com/cdn/thecraftmine-datapacks.zip -O /tmp/datapacks.zip
 unzip /tmp/datapacks.zip -d /opt/msm/servers/thecraftmine/datapacks
 
-# Store the world folders in RAM for a performance boost
-mkdir /dev/shm/msm
-chmod -R 775 /dev/shm/msm
-
 # Start the services
-cp /tmp/thecraftmine-master/msm/msm /etc/cron.d
-service cron restart
 msm thecraftmine start
