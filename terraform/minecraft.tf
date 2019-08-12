@@ -23,19 +23,17 @@ data "aws_ami" "amazon_linux" {
   owners = ["amazon"]
 }
 
-resource "aws_vpc" "main" {
-  cidr_block= "10.0.0.0/16"
-  tags = {
-    Name = "minecraft-vpc"
+data "aws_ebs_volume" "main" {
+  most_recent = true
+
+  filter {
+    name   = "volume-type"
+    values = ["gp2"]
   }
-}
 
-resource "aws_subnet" "main" {
-  vpc_id = "${aws_vpc.main.id}"
-  cidr_block = "10.0.1.0/24"
-
-  tags = {
-    Name = "thecraftmine-subnet"
+  filter {
+    name   = "attachment.instance-id"
+    values = ["${aws_instance.main.id}"]
   }
 }
 
@@ -43,9 +41,6 @@ resource "aws_security_group" "main" {
   name = "minecraft-group"
   description = "A minecraft security group"
   vpc_id = "${aws_vpc.main.id}"
-  tags = {
-    Name = "minecraft-group"
-  }
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
@@ -66,6 +61,10 @@ resource "aws_security_group" "main" {
     from_port = 0
     protocol = "tcp"
     to_port = 65535
+  }
+
+  tags = {
+    Name = "minecraft-group"
   }
 }
 
@@ -129,26 +128,33 @@ resource "aws_iam_instance_profile" "main" {
   role = "${aws_iam_role.main.name}"
 }
 
+resource "aws_key_pair" "main" {
+  key_name = "minecraft"
+  public_key = "${file("~/.ssh/minecraft.pub")}"
+}
+
 resource "aws_instance" "main" {
   ami = "${data.aws_ami.amazon_linux.id}"
-  associate_public_ip_address = true
+  ebs_optimized = true
   iam_instance_profile = "${aws_iam_instance_profile.main.name}"
   instance_type = "a1.medium"
-  key_name = "aws_scott"
+  key_name = "minecraft"
   subnet_id = "${aws_subnet.main.id}"
-  tags = {
-    Name = "Minecraft"
-  }
   vpc_security_group_ids = ["${aws_security_group.main.id}"]
 
   connection {
     agent = false
+    host = "${aws_instance.main.public_dns}"
     type = "ssh"
     user = "ec2-user"
-    private_key = "${file("~/.ssh/aws_scott.pem")}"
+    private_key = "${file("~/.ssh/minecraft.pem")}"
   }
 
   provisioner "remote-exec" {
     script = "../msm/install.sh"
+  }
+
+  tags = {
+    Name = "Minecraft Server"
   }
 }

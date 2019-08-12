@@ -35,7 +35,7 @@ resource "aws_backup_selection" "main" {
   iam_role_arn = "${aws_iam_role.backup.arn}"
   name = "thecraftmine-backup-selection"
   plan_id = "${aws_backup_plan.main.id}"
-  resources = ["${aws_instance.main.arn}"]
+  resources = ["${data.aws_ebs_volume.main.arn}"]
 }
 
 resource "aws_backup_vault" "main" {
