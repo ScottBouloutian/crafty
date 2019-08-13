@@ -137,7 +137,7 @@ resource "aws_instance" "main" {
   ami = "${data.aws_ami.amazon_linux.id}"
   ebs_optimized = true
   iam_instance_profile = "${aws_iam_instance_profile.main.name}"
-  instance_type = "a1.medium"
+  instance_type = "a1.large"
   key_name = "minecraft"
   subnet_id = "${aws_subnet.main.id}"
   vpc_security_group_ids = ["${aws_security_group.main.id}"]
