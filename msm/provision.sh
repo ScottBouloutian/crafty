@@ -30,4 +30,3 @@ unzip /tmp/datapacks.zip -d /opt/msm/servers/thecraftmine/datapacks
 
 # Start the services
 msm thecraftmine start
-msm thecraftmine worlds ram thecraftmine
