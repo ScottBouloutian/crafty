@@ -6,7 +6,8 @@ export PATH=$PATH:/usr/local/bin
 msm update --noinput
 msm server create thecraftmine
 msm jargroup create minecraft minecraft
-msm thecraftmine jar minecraft
+msm jargroup create minecraft-snapshot minecraft-snapshot
+msm thecraftmine jar minecraft-snapshot
 cp /tmp/thecraftmine-master/msm/server.properties /opt/msm/servers/thecraftmine
 cp /tmp/thecraftmine-master/msm/eula.txt /opt/msm/servers/thecraftmine
 cp /tmp/thecraftmine-master/msm/white-list.txt /opt/msm/servers/thecraftmine
