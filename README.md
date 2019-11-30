@@ -1,12 +1,16 @@
 # thecraftmine
+⛏️ A Minecraft Server
 
+## Getting Started
+Utilize the vscode remote development plugin bundle to open the dev container.
 ```
 terraform init terraform
 terraform apply terraform
 ```
 
+## Notes
 ```
-# Store world in RAM
+# Store world in RAM for a performance boost
 msm thecraftmine worlds ram thecraftmine
 ```
 
