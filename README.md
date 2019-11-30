@@ -1,6 +1,11 @@
 # thecraftmine
 
 ```
+terraform init terraform
+terraform apply terraform
+```
+
+```
 # Store world in RAM
 msm thecraftmine worlds ram thecraftmine
 ```

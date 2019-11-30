@@ -137,7 +137,7 @@ resource "aws_instance" "main" {
   ami = "${data.aws_ami.amazon_linux.id}"
   ebs_optimized = true
   iam_instance_profile = "${aws_iam_instance_profile.main.name}"
-  instance_type = "a1.large"
+  instance_type = "a1.medium"
   key_name = "minecraft"
   subnet_id = "${aws_subnet.main.id}"
   vpc_security_group_ids = ["${aws_security_group.main.id}"]
@@ -147,11 +147,11 @@ resource "aws_instance" "main" {
     host = "${aws_instance.main.public_dns}"
     type = "ssh"
     user = "ec2-user"
-    private_key = "${file("~/.ssh/minecraft.pem")}"
+    private_key = "${file("~/.ssh/minecraft")}"
   }
 
   provisioner "remote-exec" {
-    script = "../msm/install.sh"
+    script = "msm/install.sh"
   }
 
   tags = {
