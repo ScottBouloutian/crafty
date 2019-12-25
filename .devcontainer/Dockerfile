@@ -10,7 +10,5 @@ RUN apt-get update \
 
 WORKDIR /workspace
 
-RUN git config --global user.email "ScottBouloutian@gmail.com" \
-    && git config --global user.name "Scott Bouloutian" \
-    && terraform init terraform \
+RUN terraform init terraform \
     && apt-get install -y graphviz
