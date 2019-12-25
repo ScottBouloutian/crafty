@@ -7,6 +7,6 @@
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},
 	"extensions": [
-		"dbaeumer.vscode-eslint"
+		"mauve.terraform"
 	]
 }
