@@ -7,3 +7,4 @@ services:
     volumes:
       - ..:/workspace
       - ~/.ssh:/root/.ssh
+      - ~/.aws:/root/.aws
