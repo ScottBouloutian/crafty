@@ -150,8 +150,18 @@ resource "aws_instance" "main" {
     private_key = "${file("~/.ssh/minecraft")}"
   }
 
+  provisioner "file" {
+    source = "msm/"
+    destination = "/tmp"
+  }
+
   provisioner "remote-exec" {
-    script = "msm/install.sh"
+    inline = [
+      "chmod +x /tmp/install.sh",
+      "chmod +x /tmp/provision.sh",
+      "/tmp/install.sh",
+      "/tmp/provision.sh",
+    ]
   }
 
   tags = {
