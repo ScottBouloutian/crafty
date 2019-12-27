@@ -161,7 +161,7 @@ resource "aws_instance" "main" {
       "chmod +x /tmp/provision.sh",
       "/tmp/install.sh",
       "sudo cp /tmp/msm.conf /etc",
-      "sudo chown minecraft /etc/msm.conf",
+      "sudo chown minecraft:minecraft /etc/msm.conf",
       "sudo su -c /tmp/provision.sh minecraft",
     ]
   }
