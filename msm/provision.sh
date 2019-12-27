@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-sudo cp /tmp/msm.conf /etc
-sudo cp /tmp/.bashrc /opt/msm
-sudo su minecraft
 cd /opt/msm
+cp /tmp/.bashrc .
+source .bashrc
 
 # Create a new server
 msm update --noinput
@@ -18,7 +17,7 @@ mkdir /dev/shm/msm
 
 # Install mods
 mkdir -p /opt/msm/servers/thecraftmine/plugins
-wget https://dev.bukkit.org/projects/worldedit/files/latest -O /opt/msm/servers/thecraftmine/plugins
+wget https://scottbouloutian-dev.s3.amazonaws.com/cdn/worldedit-bukkit-7.0.1.jar -O /opt/msm/servers/thecraftmine/plugins/worldedit-bukkit-7.0.1.jar
 
 # Start the services
 msm thecraftmine start
