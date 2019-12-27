@@ -7,9 +7,9 @@ source .bashrc
 # Create a new server
 msm update --noinput
 msm server create thecraftmine
-msm jargroup create minecraft minecraft
-msm jargroup create minecraft-snapshot minecraft-snapshot
-msm thecraftmine jar minecraft
+msm jargroup create paper https://papermc.io/api/v1/paper/1.15.1/31/download
+
+msm thecraftmine jar paper
 cp /tmp/server.properties /opt/msm/servers/thecraftmine
 cp /tmp/eula.txt /opt/msm/servers/thecraftmine
 cp /tmp/white-list.txt /opt/msm/servers/thecraftmine
