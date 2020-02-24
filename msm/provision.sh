@@ -7,7 +7,7 @@ source .bashrc
 # Create a new server
 msm update --noinput
 msm server create thecraftmine
-msm jargroup create paper https://papermc.io/api/v1/paper/1.15.1/31/download
+msm jargroup create paper https://papermc.io/api/v1/paper/1.15.2/latest/download
 
 msm thecraftmine jar paper
 cp /tmp/server.properties /opt/msm/servers/thecraftmine

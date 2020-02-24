@@ -3,7 +3,7 @@
 
 Currently this project is being used to spin up and manage a minecraft server hosted on aws.
 Thanks to [msm](https://github.com/msmhq/msm), there is a broad range of configuration including automated backups.
-Default values are currently set to generate a [paper](https://papermc.io/) 1.15.1 server.
+Default values are currently set to generate a [paper](https://papermc.io/) 1.15.2 server.
 
 ## Getting Started
 Utilize the vscode remote development plugin bundle to open the dev container.
