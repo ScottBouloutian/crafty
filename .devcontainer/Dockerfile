@@ -1,14 +1,28 @@
-FROM ubuntu
+# See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.145.1/containers/python-3/.devcontainer/base.Dockerfile
 
-WORKDIR /tmp
+# [Choice] Python version: 3, 3.9, 3.8, 3.7, 3.6
+ARG VARIANT="3"
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 
-RUN apt-get update \
-    && apt-get install -y wget unzip git \
-    && wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip \
-    && unzip terraform_0.12.6_linux_amd64.zip \
-    && mv terraform /usr/local/bin/
+# [Option] Install Node.js
+ARG INSTALL_NODE="true"
+ARG NODE_VERSION="lts/*"
+RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-WORKDIR /workspace
+# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
+# COPY requirements.txt /tmp/pip-tmp/
+# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+#    && rm -rf /tmp/pip-tmp
 
-RUN terraform init terraform \
-    && apt-get install -y graphviz
+# [Optional] Uncomment this section to install additional OS packages.
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends software-properties-common
+
+# Add the official HashiCorp Linux repository and install Terraform
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
+    && apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+    && apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends terraform
+
+# [Optional] Uncomment this line to install global node packages.
+# RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
