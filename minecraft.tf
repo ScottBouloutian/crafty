@@ -2,27 +2,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-
-  filter {
-    name = "name"
-    values = ["amzn2-ami-hvm-2.0.20190618-arm64-gp2"]
-  }
-
-  filter {
-    name = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name = "architecture"
-    values = ["arm64"]
-  }
-
-  owners = ["amazon"]
-}
-
 data "aws_ebs_volume" "main" {
   most_recent = true
 
@@ -33,14 +12,14 @@ data "aws_ebs_volume" "main" {
 
   filter {
     name   = "attachment.instance-id"
-    values = ["${aws_instance.main.id}"]
+    values = [aws_instance.main.id]
   }
 }
 
 resource "aws_security_group" "main" {
   name = "minecraft-group"
   description = "A minecraft security group"
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = aws_vpc.main.id
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
@@ -119,52 +98,27 @@ POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "main" {
-  role = "${aws_iam_role.main.name}"
-  policy_arn = "${aws_iam_policy.main.arn}"
+  role = aws_iam_role.main.name
+  policy_arn = aws_iam_policy.main.arn
 }
 
 resource "aws_iam_instance_profile" "main" {
   name = "minecraft-profile"
-  role = "${aws_iam_role.main.name}"
+  role = aws_iam_role.main.name
 }
 
 resource "aws_key_pair" "main" {
   key_name = "minecraft"
-  public_key = "${file("~/.ssh/minecraft.pub")}"
+  public_key = file("minecraft.pub")
 }
 
 resource "aws_instance" "main" {
-  ami = "${data.aws_ami.amazon_linux.id}"
-  ebs_optimized = true
-  iam_instance_profile = "${aws_iam_instance_profile.main.name}"
-  instance_type = "a1.medium"
+  ami = "ami-0f319c6376e4c7b75"
+  iam_instance_profile = aws_iam_instance_profile.main.name
+  instance_type = "t2.medium"
   key_name = "minecraft"
-  subnet_id = "${aws_subnet.main.id}"
-  vpc_security_group_ids = ["${aws_security_group.main.id}"]
-
-  connection {
-    agent = false
-    host = "${aws_instance.main.public_dns}"
-    type = "ssh"
-    user = "ec2-user"
-    private_key = "${file("~/.ssh/minecraft")}"
-  }
-
-  provisioner "file" {
-    source = "msm/"
-    destination = "/tmp"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/install.sh",
-      "chmod +x /tmp/provision.sh",
-      "/tmp/install.sh",
-      "sudo cp /tmp/msm.conf /etc",
-      "sudo chown minecraft:minecraft /etc/msm.conf",
-      "sudo su -c /tmp/provision.sh minecraft",
-    ]
-  }
+  subnet_id = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.main.id]
 
   tags = {
     Name = "Minecraft Server"

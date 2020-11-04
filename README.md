@@ -20,7 +20,7 @@ terraform apply terraform
 # Generate a visual graph of resources and their dependencies
 terraform graph | dot -Tsvg > terraform/graph.svg
 ```
-![terraform resource graph](./terraform/graph.svg)
+![terraform resource graph](graph.svg)
 
 ## Notes
 ```
