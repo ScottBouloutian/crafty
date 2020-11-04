@@ -18,11 +18,11 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/shar
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends software-properties-common
 
-# Add the official HashiCorp Linux repository and install Terraform
+# Add the official HashiCorp Linux repository and install packages
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
     && apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
     && apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends terraform
+    && apt-get -y install --no-install-recommends packer terraform
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
