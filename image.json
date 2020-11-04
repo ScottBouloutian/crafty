@@ -1,0 +1,36 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
+    "aws_region": "us-east-1"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `aws_region`}}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*",
+          "root-device-type": "ebs",
+          "architecture": "x86_64"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.small",
+      "ssh_username": "ubuntu",
+      "ami_name": "thecraftmine"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "setup.sh"
+    }
+  ]
+}

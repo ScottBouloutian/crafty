@@ -18,7 +18,7 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "backup" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup"
-  role = "${aws_iam_role.backup.name}"
+  role = aws_iam_role.backup.name
 }
 
 resource "aws_backup_plan" "main" {
@@ -26,21 +26,21 @@ resource "aws_backup_plan" "main" {
 
   rule {
     rule_name = "thecraftmine-backup-rule"
-    target_vault_name = "${aws_backup_vault.main.name}"
+    target_vault_name = aws_backup_vault.main.name
     schedule = "cron(0 0 * * ? *)"
   }
 }
 
 resource "aws_backup_selection" "main" {
-  iam_role_arn = "${aws_iam_role.backup.arn}"
+  iam_role_arn = aws_iam_role.backup.arn
   name = "thecraftmine-backup-selection"
-  plan_id = "${aws_backup_plan.main.id}"
-  resources = ["${data.aws_ebs_volume.main.arn}"]
+  plan_id = aws_backup_plan.main.id
+  resources = [data.aws_ebs_volume.main.arn]
 }
 
 resource "aws_backup_vault" "main" {
   name = "thecraftmine-backup-vault"
-  kms_key_arn = "${aws_kms_key.main.arn}"
+  kms_key_arn = aws_kms_key.main.arn
 }
 
 resource "aws_kms_key" "main" {
