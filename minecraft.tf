@@ -107,16 +107,11 @@ resource "aws_iam_instance_profile" "main" {
   role = aws_iam_role.main.name
 }
 
-resource "aws_key_pair" "main" {
-  key_name = "minecraft"
-  public_key = file("minecraft.pub")
-}
-
 resource "aws_instance" "main" {
   ami = "ami-0f319c6376e4c7b75"
   iam_instance_profile = aws_iam_instance_profile.main.name
   instance_type = "t2.medium"
-  key_name = "minecraft"
+  key_name = "thecraftmine"
   subnet_id = aws_subnet.main.id
   vpc_security_group_ids = [aws_security_group.main.id]
 
