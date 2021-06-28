@@ -24,7 +24,7 @@
       },
       "instance_type": "t2.small",
       "ssh_username": "ubuntu",
-      "ami_name": "thecraftmine"
+      "ami_name": "crafty"
     }
   ],
   "provisioners": [
