@@ -1,6 +1,7 @@
 # Terraform
 .terraform
 terraform.tfstate*
+.terraform.lock.hcl
 
 # Logs
 logs

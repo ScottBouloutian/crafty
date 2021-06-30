@@ -1,9 +1,6 @@
-# thecraftmine
-🧱 + ⛏️ = thecraftmine.com
+# crafty
 
-Currently this project is being used to spin up and manage a minecraft server hosted on aws.
-Thanks to [msm](https://github.com/msmhq/msm), there is a broad range of configuration including automated backups.
-Default values are currently set to generate a [paper](https://papermc.io/) 1.15.2 server.
+Currently this project is being used to spin up and manage a craty minecraft server manager on aws.
 
 ## Getting Started
 Utilize the vscode remote development plugin bundle to open the dev container.
@@ -16,14 +13,4 @@ terraform init terraform
 
 # Create the resource stack in aws
 terraform apply terraform
-
-# Generate a visual graph of resources and their dependencies
-terraform graph | dot -Tsvg > terraform/graph.svg
-```
-![terraform resource graph](graph.svg)
-
-## Notes
-```
-# Optionally store world in RAM for a performance boost
-msm thecraftmine worlds ram thecraftmine
 ```
