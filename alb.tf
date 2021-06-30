@@ -6,7 +6,7 @@ data "aws_acm_certificate" "issued" {
 module "alb_security_group" {
   source              = "terraform-aws-modules/security-group/aws"
   version             = "4.2.0"
-  name                = "${local.application}_alb_security_group"
+  name                = "${local.application}_${local.environment}_alb_security_group"
   description         = "Security group for usage with alb"
   vpc_id              = module.vpc.vpc_id
   ingress_cidr_blocks = ["0.0.0.0/0"]
@@ -16,12 +16,13 @@ module "alb_security_group" {
     "https" : [443, 443, "tcp", "HTTPS"],
     "all-tcp" : [0, 65535, "tcp", "All TCP ports"],
   }
+  tags = local.tags
 }
 
 module "alb" {
   source             = "terraform-aws-modules/alb/aws"
   version            = "6.2.0"
-  name               = "${local.application}-alb"
+  name               = "${local.application}-${local.environment}-alb"
   load_balancer_type = "application"
   vpc_id             = module.vpc.vpc_id
   subnets            = module.vpc.public_subnets
