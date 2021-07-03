@@ -3,7 +3,7 @@ module "vpc" {
   version                                        = "3.1.0"
   name                                           = "${local.application}_${local.environment}_ipv6"
   cidr                                           = "10.0.0.0/16"
-  azs                                            = ["${local.region}a", "${local.region}b"]
+  azs                                            = ["${var.aws_default_region}a", "${var.aws_default_region}b"]
   private_subnets                                = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets                                 = ["10.0.101.0/24", "10.0.102.0/24"]
   database_subnets                               = ["10.0.103.0/24", "10.0.104.0/24"]

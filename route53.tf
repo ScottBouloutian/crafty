@@ -11,5 +11,13 @@ module "records" {
         zone_id = module.alb.lb_zone_id
       }
     },
+    {
+      name = "minecraft"
+      type = "A"
+      ttl  = 3600
+      records = [
+        module.ec2.public_ip[0]
+      ]
+    }
   ]
 }
