@@ -15,10 +15,12 @@ module "security_group" {
   description         = "Security group for usage with EC2 instance"
   vpc_id              = module.vpc.vpc_id
   ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["crafty", "ssh"]
+  ingress_rules       = ["crafty", "minecraft", "voice", "ssh"]
   egress_rules        = ["all-tcp"]
   rules = {
     "crafty" : [8000, 8000, "tcp", "crafty server"],
+    "minecraft" : [local.minecraft_port, local.minecraft_port, "tcp", "minecraft"],
+    "voice" : [local.voice_port, local.voice_port, "udp", "proximity voice chat"],
     "all-tcp" : [0, 65535, "tcp", "All TCP ports"],
     "ssh" : [22, 22, "tcp", "SSH"],
   }
